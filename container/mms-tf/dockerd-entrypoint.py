@@ -14,7 +14,13 @@ def _retry_if_error(exception):
 def _start_mms():
     # by default the number of workers per model is 1, but we can configure it through the
     # environment variable below if desired.
-    # os.environ['SAGEMAKER_MODEL_SERVER_WORKERS'] = '2'
+    os.environ['MMS_MAX_REQUEST_SIZE']='536870912'
+    os.environ['MMS_MAX_RESPONSE_SIZE']='536870912'
+    os.environ['MMS_DEFAULT_WORKERS_PER_MODEL']='44'
+    os.environ['MMS_JOB_QUEUE_SIZE']='500'
+    # os.environ['TF_NUM_INTEROP_THREADS']='1'
+    # os.environ['TF_NUM_INTRAOP_THREADS']='1'
+    # os.environ['OMP_NUM_THREADS']='1'
     model_server.start_model_server(handler_service='/home/model-server/model_handler.py:handle')
 
 def main():
